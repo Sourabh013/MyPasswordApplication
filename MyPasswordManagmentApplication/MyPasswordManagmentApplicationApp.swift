@@ -13,7 +13,8 @@ struct MyPasswordManagmentApplicationApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+          //  ContentView()
+            HomeController()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
