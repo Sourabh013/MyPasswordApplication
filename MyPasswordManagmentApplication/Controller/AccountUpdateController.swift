@@ -9,8 +9,8 @@ import SwiftUI
 
 struct AccountUpdateController: View {
     let account: String
-    @State private var username: String = "user@example.com"
-    @State private var password: String = "yourSecretPassword123"
+    @State private var username: String = "modi@example.com"
+    @State private var password: String = "password123"
     @State private var isShowingPassword: Bool = false
     @Environment(\.dismiss) private var dismiss
     
@@ -60,7 +60,7 @@ struct AccountUpdateController: View {
             
             HStack(spacing: 20) {
                 Button(action: {
-                    // Handle edit
+                 
                 }) {
                     Text("Edit")
                         .foregroundColor(.white)
@@ -71,7 +71,7 @@ struct AccountUpdateController: View {
                 }
 
                 Button(action: {
-                    // Handle delete
+                    
                 }) {
                     Text("Delete")
                         .foregroundColor(.white)
