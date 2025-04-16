@@ -12,6 +12,8 @@ struct AddNewAccountController: View {
         @State private var username = ""
         @State private var password = ""
     @State private var email = ""
+    @State private var showAlert = false
+        @State private var alertMessage = ""
     @StateObject var databaseManager = DatabaseManager()
     
         var body: some View {
@@ -43,19 +45,31 @@ struct AddNewAccountController: View {
                     .padding(.horizontal)
                 
                 Button(action: {
-                    let newEntry = PasswordDetailModel(
-                            accountName: accountName,
-                            username: username,
-                            password: password,
-                            email: email
-                        )
-                        databaseManager.addUser(accountDetails: newEntry)
-                        
-                        accountName = ""
-                        username = ""
-                        password = ""
-                        email = ""
-                }) {
+                               if accountName.isEmpty {
+                                   alertMessage = "Account Name is required."
+                                   showAlert = true
+                               } else if username.isEmpty {
+                                   alertMessage = "Username/Email is required."
+                                   showAlert = true
+                               } else if password.isEmpty {
+                                   alertMessage = "Password is required."
+                                   showAlert = true
+                               } else {
+                                   let newEntry = PasswordDetailModel(
+                                       accountName: accountName,
+                                       username: username,
+                                       password: password,
+                                       email: email
+                                   )
+                                   databaseManager.addUser(accountDetails: newEntry)
+                                   
+                                   // Clear fields
+                                   accountName = ""
+                                   username = ""
+                                   password = ""
+                                   email = ""
+                               }
+                           })  {
                     Text("Add New Account")
                         .foregroundColor(.white)
                         .fontWeight(.bold)
@@ -69,6 +83,9 @@ struct AddNewAccountController: View {
                 Spacer()
             }
             .background(Color(.systemGray6))
+            .alert(isPresented: $showAlert) {
+                        Alert(title: Text("Missing Information"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
+                    }
         }
     }
 
